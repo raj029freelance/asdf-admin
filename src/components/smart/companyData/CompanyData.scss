@@ -1,0 +1,42 @@
+.ordersWrapper {
+  padding: 30px;
+  .title {
+    color: #111827;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 24px;
+    padding-bottom: 10px;
+  }
+  .ant-card {
+    border-radius: 10px !important;
+    box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+  }
+}
+
+.popup {
+  position: fixed;
+
+  left: 25%;
+  top: 30%;
+
+  width: 50%;
+
+  border: 1px solid #011627;
+  border-radius: 1em;
+  box-shadow: -2px 5px 5px #e71d36;
+
+  background-color: #fdfffc;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  color: #011627;
+}
+
+.during-popup {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+}
