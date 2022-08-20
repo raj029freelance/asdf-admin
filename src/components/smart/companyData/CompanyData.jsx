@@ -58,12 +58,14 @@ const CompanyData = () => {
       console.log("called")
       const htmlString = draftToHtml(convertToRaw(editorState.getCurrentContent()));
       editOrganization(
-        values._id,
-        {
-        ...values,
-        CallCenterHours: `${values.serviceHours}hours , ${values.serviceDays}days`,
-        description: htmlString
-      })
+        {_id: values._id ,
+          data:  
+          {   ...values,
+          CallCenterHours: `${values.serviceHours}hours , ${values.serviceDays}days`,
+          description: htmlString 
+        }
+      }
+      )
         .unwrap()
         .then(() => {
           toast.success('Organization details updated Successfully', {

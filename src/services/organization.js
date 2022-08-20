@@ -24,8 +24,11 @@ export const organizationApi = createApi({
     editOrganization: builder.mutation({
       query: ({ _id, data }) => ({
         url: `/${_id}`,
-        method: 'patch',
-        body: data
+        method: 'post',
+        body: data,
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
       }),
       invalidatesTags: ['Organizations']
     }),
