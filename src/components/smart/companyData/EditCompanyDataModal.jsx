@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect , useState} from 'react';
 import { Form, Input, Button, Select, Checkbox } from 'antd';
 import { TimePicker } from 'antd';
 import './EditCompanyModal.scss';
@@ -10,7 +10,25 @@ import TextEditor from '../textEditor/TextEditor';
 const { Option } = Select;
 
 const EditOrganizationForm = ({ formik , editorState, setEditorState}) => {
-  
+  const [serviceHoursDefaultState, setServiceHoursDefaultState] = useState(1);
+  const [serviceDaysDefaultState, setServiceDaysDefaultState] = useState(1);
+
+  // useEffect(()=>{
+  //   if(formik.values.CallCenterHours != undefined) {
+  //     console.log(formik.values.CallCenterHours)
+  //   const hours= parseInt(formik.values.CallCenterHours.split(',')[0].split('hours')[0])
+  //   const days = parseInt(formik.values.CallCenterHours.split(',')[1].split('days')[0])
+  //   console.log(hours)
+  //   console.log(days)
+  //   // setServiceDaysDefaultState(days)
+  //   // setServiceHoursDefaultState(hours)
+  //   }
+  // })
+
+  console.log(formik.values.CallCenterHours)
+  // useEffect(()=>{
+  //   setEditorState(formik.values.description)
+  // },[])
   return (
     <div>
       <Form name="basic" onFinish={(e) => e.preventDefault()} autoComplete="off">
@@ -38,11 +56,12 @@ const EditOrganizationForm = ({ formik , editorState, setEditorState}) => {
           </Form.Item>
         </div>
         <div className="container">
-          <Form.Item name="department" label="Department your calling" rules={[{ required: true }]}>
+          <Form.Item name="department" label="Department your calling">
             <Select
               placeholder="Enter Department you are calling"
               name="DepartmentYourCalling"
               value={formik.values.DepartmentYourCalling}
+              defaultValue={formik.values.DepartmentYourCalling}
               onChange={formik.handleChange}
             >
               <Option value="Customer Service">Customer Service</Option>
@@ -50,68 +69,63 @@ const EditOrganizationForm = ({ formik , editorState, setEditorState}) => {
           </Form.Item>
           <div className="checkbox-wrapper">
             <Checkbox
-              onChange={(e) =>
-                formik.setFieldValue({
-                  field: 'CallBackAvailable',
-                  value: `${e.target.checked ? 'YES' : 'NO'}`
-                })
+            defaultChecked={formik.values.CallBackAvailable === "YES" ? true : false}
+              onChange={(e) => {
+                formik.setFieldValue(
+                 'CallBackAvailable',
+               `${!e.target.checked? 'NO' : 'YES'}`,
+                )
+                
+              }
               }
             >
               CallBack Available
             </Checkbox>
             <Checkbox
+            defaultChecked={formik.values.CallPickedUpByARealPerson === "YES" ? true : false}
               onChange={(e) =>
-                formik.setFieldValue({
-                  field: 'CallPickedUpByARealPerson',
-                  value: `${e.target.checked ? 'YES' : 'NO'}`
-                })
+                formik.setFieldValue(
+                  'CallPickedUpByARealPerson',
+                  `${!e.target.checked? 'NO' : 'YES'}`
+                )
               }
             >
               Call Picked
             </Checkbox>
           </div>
         </div>
-        <div className="container d-flex">
-          <div className="time-wrapper">
-            <p className="label">Best Time to Dail</p>
-            <TimePicker
-              use12Hours
-              format="h:mm a"
-              onChange={(value) =>
-                formik.setFieldValue({ field: 'BestTimeToDail', value: value.format('h:mm a') })
+        <div className="container1">
+          <div className="time-wrapper" style={{marginTop:15}}>
+            <span className="label" >Best Time to Dail {"  "}</span>
+            <Input type="text" 
+            value={formik.values.BestTimeToDail}
+            defaultValue={formik.values.BestTimeToDail}
+            onChange={(value) =>
+                formik.setFieldValue({ field: 'BestTimeToDail', value: value})
               }
-            />
+          />
           </div>
-          <div className="time-wrapper d-flex">
-            <Form.Item label="Service Hours" name="hour" rules={[{ required: true }]}>
-              <Input
-                size="large"
-                type="number"
-                name="serviceHours"
-                value={formik.values.serviceHours}
-                onChange={formik.handleChange}
-                placeholder="Enter Hour"
-                min={1}
-                max={24}
-              />
+          <div className="time-wrapper" style={{marginTop:15}}>
+            <Form.Item label="Call Center Hours">
+            <Input type="text" 
+            value={formik.values.CallCenterHours}
+            name="CallCenterHours"
+            defaultValue={()=>{
+              console.log(formik.values.CallCenterHours)
+              return formik.values.CallCenterHours}}
+            onChange={formik.handleChange}
+
+          />
+            
             </Form.Item>
-            <Form.Item label="Service Days" name="days" rules={[{ required: true }]}>
-              <Input
-                size="large"
-                type="number"
-                name="serviceDays"
-                value={formik.values.serviceDays}
-                onChange={formik.handleChange}
-                placeholder="Enter days"
-                min={1}
-                max={7}
-              />
-            </Form.Item>
-            <TextEditor htmlText={''} editorState={editorState} setEditorState={setEditorState} />
+          </div>
+         
+          <div className="service-days-wrapper " style={{marginTop:15}}>
+            <TextEditor  htmlText={''} editorState={editorState} setEditorState={setEditorState} style={{height:"100px"}}/>
             <Button onClick={formik.handleSubmit} type="primary">
         Save Changes
       </Button>
-          </div>
+            </div>
         </div>
       </Form>
     </div>
