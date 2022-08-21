@@ -31,7 +31,11 @@ const EditOrganizationForm = ({ formik , editorState, setEditorState}) => {
   // },[])
   return (
     <div>
-      <Form name="basic" onFinish={(e) => e.preventDefault()} autoComplete="off">
+      <Form
+        name="basic"
+        onFinish={(e) => e.preventDefault()}
+        autoComplete="off"
+      >
         <div className="container">
           <Form.Item label="Company Name">
             <Input
