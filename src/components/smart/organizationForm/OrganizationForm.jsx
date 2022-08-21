@@ -22,7 +22,6 @@ const OrganizationForm = ({ formik }) => {
               placeholder="Company Name"
             />
           </Form.Item>
-
           <Form.Item label="Phone Number">
             <Input
               size="large"
