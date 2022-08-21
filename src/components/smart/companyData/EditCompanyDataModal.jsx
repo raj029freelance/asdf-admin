@@ -1,33 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Form, Input, Button, Select, Checkbox } from "antd";
-import { TimePicker } from "antd";
 import "./EditCompanyModal.scss";
-import { useFormik } from "formik";
-import { useEditOrganizationMutation } from "services/organization";
 import TextEditor from "../textEditor/TextEditor";
 
 const { Option } = Select;
 
 const EditOrganizationForm = ({ formik, editorState, setEditorState }) => {
-  const [serviceHoursDefaultState, setServiceHoursDefaultState] = useState(1);
-  const [serviceDaysDefaultState, setServiceDaysDefaultState] = useState(1);
-
-  // useEffect(()=>{
-  //   if(formik.values.CallCenterHours != undefined) {
-  //     console.log(formik.values.CallCenterHours)
-  //   const hours= parseInt(formik.values.CallCenterHours.split(',')[0].split('hours')[0])
-  //   const days = parseInt(formik.values.CallCenterHours.split(',')[1].split('days')[0])
-  //   console.log(hours)
-  //   console.log(days)
-  //   // setServiceDaysDefaultState(days)
-  //   // setServiceHoursDefaultState(hours)
-  //   }
-  // })
-
-  console.log(formik.values.description);
-  // useEffect(()=>{
-  //   setEditorState(formik.values.description)
-  // },[])
   return (
     <div>
       <Form

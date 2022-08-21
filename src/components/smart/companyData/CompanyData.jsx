@@ -109,7 +109,9 @@ const CompanyData = () => {
           setModal(false);
           if (searchReturnedResults && searchReturnedResults.length > 0) {
             const newList = searchReturnedResults.map((result) =>
-              result._id === values._id ? values : result
+              result._id === values._id
+                ? { ...values, description: htmlString }
+                : result
             );
             setSearchReturnedResults(newList);
           }
@@ -153,6 +155,7 @@ const CompanyData = () => {
 
   const editHandler = (companyRecord) => {
     setSelectedOrg(companyRecord);
+    console.log(companyRecord.description);
 
     const contentBlock = htmlToDraft(companyRecord.description);
     if (contentBlock) {
