@@ -18,6 +18,9 @@ import { useSelector } from "react-redux";
 import EditOrganizationForm from "./EditCompanyDataModal";
 import Search from "antd/lib/input/Search";
 
+import { EditorState, ContentState } from "draft-js";
+import htmlToDraft from "html-to-draftjs";
+
 const initialState = {
   CompanyName: "",
   PhoneNumber: "",
@@ -28,6 +31,7 @@ const initialState = {
   serviceHours: 1,
   serviceDays: 1,
   CallCenterHours: "24 hours, 7 days",
+  description: "",
 };
 const validationSchema = Yup.object().shape({
   CompanyName: Yup.string().required("Company Name required"),
@@ -103,7 +107,6 @@ const CompanyData = () => {
         .unwrap()
         .then(() => {
           setModal(false);
-
           if (searchReturnedResults && searchReturnedResults.length > 0) {
             const newList = searchReturnedResults.map((result) =>
               result._id === values._id ? values : result
@@ -150,6 +153,16 @@ const CompanyData = () => {
 
   const editHandler = (companyRecord) => {
     setSelectedOrg(companyRecord);
+
+    const contentBlock = htmlToDraft(companyRecord.description);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(
+        contentBlock.contentBlocks
+      );
+      const editorState = EditorState.createWithContent(contentState);
+      setEditorState(editorState);
+    }
+
     setModal(true);
   };
 

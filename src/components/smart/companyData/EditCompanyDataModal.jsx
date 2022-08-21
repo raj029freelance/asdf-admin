@@ -24,7 +24,7 @@ const EditOrganizationForm = ({ formik, editorState, setEditorState }) => {
   //   }
   // })
 
-  console.log(formik.values.CallCenterHours);
+  console.log(formik.values.description);
   // useEffect(()=>{
   //   setEditorState(formik.values.description)
   // },[])
@@ -124,7 +124,6 @@ const EditOrganizationForm = ({ formik, editorState, setEditorState }) => {
 
           <div className="service-days-wrapper " style={{ marginTop: 15 }}>
             <TextEditor
-              htmlText={""}
               editorState={editorState}
               setEditorState={setEditorState}
               style={{ height: "100px" }}
