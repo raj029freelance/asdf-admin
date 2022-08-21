@@ -1,12 +1,16 @@
-import React from 'react';
-import { Form, Input, Button, Select, Checkbox } from 'antd';
-import { TimePicker } from 'antd';
-import './OrganizationForm.scss';
+import React from "react";
+import { Form, Input, Button, Select, Checkbox } from "antd";
+import { TimePicker } from "antd";
+import "./OrganizationForm.scss";
 const { Option } = Select;
 const OrganizationForm = ({ formik }) => {
   return (
     <div className="organizationForm">
-      <Form name="basic" onFinish={(e) => e.preventDefault()} autoComplete="off">
+      <Form
+        name="basic"
+        onFinish={(e) => e.preventDefault()}
+        autoComplete="off"
+      >
         <div className="container">
           <Form.Item label="Company Name">
             <Input
@@ -31,7 +35,11 @@ const OrganizationForm = ({ formik }) => {
           </Form.Item>
         </div>
         <div className="container">
-          <Form.Item name="department" label="Department your calling" rules={[{ required: true }]}>
+          <Form.Item
+            name="department"
+            label="Department your calling"
+            rules={[{ required: true }]}
+          >
             <Select
               placeholder="Enter Department you are calling"
               name="DepartmentYourCalling"
@@ -44,20 +52,20 @@ const OrganizationForm = ({ formik }) => {
           <div className="checkbox-wrapper">
             <Checkbox
               onChange={(e) =>
-                formik.setFieldValue({
-                  field: 'CallBackAvailable',
-                  value: `${e.target.checked ? 'YES' : 'NO'}`
-                })
+                formik.setFieldValue(
+                  "CallBackAvailable",
+                  `${e.target.checked ? "YES" : "NO"}`
+                )
               }
             >
               CallBack Available
             </Checkbox>
             <Checkbox
               onChange={(e) =>
-                formik.setFieldValue({
-                  field: 'CallPickedUpByARealPerson',
-                  value: `${e.target.checked ? 'YES' : 'NO'}`
-                })
+                formik.setFieldValue(
+                  "CallPickedUpByARealPerson",
+                  `${e.target.checked ? "YES" : "NO"}`
+                )
               }
             >
               Call Picked
@@ -71,12 +79,16 @@ const OrganizationForm = ({ formik }) => {
               use12Hours
               format="h:mm a"
               onChange={(value) =>
-                formik.setFieldValue({ field: 'BestTimeToDail', value: value.format('h:mm a') })
+                formik.setFieldValue("BestTimeToDail", value.format("h:mm a"))
               }
             />
           </div>
           <div className="time-wrapper d-flex">
-            <Form.Item label="Service Hours" name="hour" rules={[{ required: true }]}>
+            <Form.Item
+              label="Service Hours"
+              name="hour"
+              rules={[{ required: true }]}
+            >
               <Input
                 size="large"
                 type="number"
@@ -88,7 +100,11 @@ const OrganizationForm = ({ formik }) => {
                 max={24}
               />
             </Form.Item>
-            <Form.Item label="Service Days" name="days" rules={[{ required: true }]}>
+            <Form.Item
+              label="Service Days"
+              name="days"
+              rules={[{ required: true }]}
+            >
               <Input
                 size="large"
                 type="number"
