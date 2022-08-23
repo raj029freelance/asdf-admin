@@ -1,57 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Space, Button, Input } from 'antd';
-import { Table } from 'antd';
-import '../companyData/CompanyData.scss';
-import { useGetUserQueriesQuery, useEditUserQueriesMutation } from 'services/organization';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Card, Space, Button, Input } from "antd";
+import { Table } from "antd";
+import "../companyData/CompanyData.scss";
+import {
+  useGetUserQueriesQuery,
+  useEditUserQueriesMutation,
+} from "services/organization";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const UserQueries = () => {
   const [allOrders, setAllOrders] = useState([]);
   const [page, setPage] = useState(0);
-  const [note, setNote] = useState("")
+  const [note, setNote] = useState("");
   const [limit, setLimit] = useState(10);
   const { data, isLoading } = useGetUserQueriesQuery();
   const [editUserQueries] = useEditUserQueriesMutation();
 
   const editHandler = (record) => {
-    const newRecord = {}
-    for(var key in record) newRecord[key] = record[key];
-    newRecord.resolved = true;  
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/organizations/query/edit/${record._id}`, newRecord).then(() => {
-          toast.success('Query updated', {
-            pauseOnHover: false,
-            autoClose: 2000
-          });
-        })
-        .catch((err) => {
-          toast.error('Some Problem Occured!', {
-            autoClose: 2000,
-            pauseOnHover: false
-          });
+    const newRecord = {};
+    for (var key in record) newRecord[key] = record[key];
+    newRecord.resolved = true;
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/organizations/query/edit/${record._id}`,
+        newRecord
+      )
+      .then(() => {
+        toast.success("Query updated", {
+          pauseOnHover: false,
+          autoClose: 2000,
         });
+      })
+      .catch((err) => {
+        toast.error("Some Problem Occured!", {
+          autoClose: 2000,
+          pauseOnHover: false,
+        });
+      });
   };
 
-  const handleSubmit = (record) =>{
-    const newRecord = {}
-    for(var key in record) newRecord[key] = record[key];
+  const handleSubmit = (record) => {
+    const newRecord = {};
+    for (var key in record) newRecord[key] = record[key];
     newRecord.note = note;
     console.log(newRecord);
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/organizations/query/edit/${record._id}`, newRecord).then(() => {
-          toast.success('Query updated', {
-            pauseOnHover: false,
-            autoClose: 2000
-          });
-        })
-        .catch((err) => {
-          console.log(err)
-          toast.error('Some Problem Occured!', {
-            autoClose: 2000,
-            pauseOnHover: false
-          });
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/organizations/query/edit/${record._id}`,
+        newRecord
+      )
+      .then(() => {
+        toast.success("Query updated", {
+          pauseOnHover: false,
+          autoClose: 2000,
         });
-  }
-  
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Some Problem Occured!", {
+          autoClose: 2000,
+          pauseOnHover: false,
+        });
+      });
+  };
+
   useEffect(() => {
     if (data) {
       setAllOrders(data?.queries);
@@ -59,69 +72,75 @@ const UserQueries = () => {
   }, [data]);
   const columns = [
     {
-      title: 'id',
-      dataIndex: '_id',
-      key: '_id'
+      title: "id",
+      dataIndex: "_id",
+      key: "_id",
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name'
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber'
+      title: "Phone Number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email'
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description'
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
-      title: 'Note (Visible to admin only)',
-      dataIndex: 'note',
-      key: 'note',
+      title: "Note (Visible to admin only)",
+      dataIndex: "note",
+      key: "note",
       render: (_, record) => {
-        return(
-          <>
-          <Input type="text" name="note" onChange={(e ) => setNote(e.target.value)} defaultValue={record.note} style={{width:"80%"}}/>
-          <Button type="primary" onClick ={()=>handleSubmit(record)}>Update</Button>
-        </>
-        )
-      }
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => {
-        if(!record.resolved) {
         return (
-          <Space size="middle">
-            <Button type="danger" onClick={() => editHandler(record)}>
-              Mark as resolved
+          <>
+            <Input
+              type="text"
+              name="note"
+              onChange={(e) => setNote(e.target.value)}
+              defaultValue={record.note}
+              style={{ width: "80%" }}
+            />
+            <Button type="primary" onClick={() => handleSubmit(record)}>
+              Update
             </Button>
-          </Space>
+          </>
         );
-        }else{
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => {
+        if (!record.resolved) {
           return (
-            <p>Resolved</p>
-          )
+            <Space size="middle">
+              <Button type="danger" onClick={() => editHandler(record)}>
+                Mark as resolved
+              </Button>
+            </Space>
+          );
+        } else {
+          return <p>Resolved</p>;
         }
       },
-      hidden: false
-    }
+      hidden: false,
+    },
   ].filter((column) => column?.hidden !== true);
 
   const handleChange = (pagination) => {
     setPage(pagination.current);
   };
-  console.log(allOrders, 'all');
+  console.log(allOrders, "all");
   return (
     <>
       <div className="ordersWrapper">

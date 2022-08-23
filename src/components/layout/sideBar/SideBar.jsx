@@ -1,24 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Menu, Layout } from 'antd';
-import { Link } from 'react-router-dom';
-import { UserOutlined } from '@ant-design/icons';
-import './SideBar.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { Menu, Layout } from "antd";
+import { Link } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
+import "./SideBar.scss";
 
 const { Sider } = Layout;
 const Routes = [
   {
-    path: '/',
-    name: 'Register Company'
+    path: "/",
+    name: "Register Company",
   },
   {
-    path: '/companyFields',
-    name: 'Company Data'
+    path: "/companyFields",
+    name: "Company Data",
   },
   {
-    path: '/userQueries',
-    name: 'User Queries'
-  }
+    path: "/userQueries",
+    name: "User Queries",
+  },
+  {
+    path: "/editHomePage",
+    name: "Edit Home Page",
+  },
 ];
 const SideBar = ({ collapsed }) => {
   const generateLinks = () => {
@@ -39,14 +43,18 @@ const SideBar = ({ collapsed }) => {
       collapsible
       collapsed={collapsed}
       style={{
-        position: 'fixed',
+        position: "fixed",
         top: 0,
         bottom: 0,
-        overflow: 'hidden'
+        overflow: "hidden",
       }}
     >
-      {!collapsed ? <h3 className="logo">SideBar</h3> : <h3 className="logo">SB</h3>}
-      <Menu theme="dark" mode="inline" defaultSelectedKeys={['0']}>
+      {!collapsed ? (
+        <h3 className="logo">SideBar</h3>
+      ) : (
+        <h3 className="logo">SB</h3>
+      )}
+      <Menu theme="dark" mode="inline" defaultSelectedKeys={["0"]}>
         {generateLinks()}
       </Menu>
     </Sider>
@@ -54,7 +62,7 @@ const SideBar = ({ collapsed }) => {
 };
 
 SideBar.propTypes = {
-  collapsed: PropTypes.bool.isRequired
+  collapsed: PropTypes.bool.isRequired,
 };
 
 export default SideBar;
