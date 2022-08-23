@@ -56,6 +56,17 @@ export const organizationApi = createApi({
       }),
       providesTags: ["Queries"],
     }),
+    editUserQueries: builder.mutation({
+      query: ({ _id, data }) => ({
+        url: `/query/${_id}`,
+        method: "post",
+        body: data,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }),
+      invalidatesTags: ["Queries"],
+    }),
     deleteUser: builder.mutation({
       query: ({ _id }) => ({
         url: `/query/${_id}`,
@@ -84,4 +95,5 @@ export const {
   useEditOrganizationMutation,
   useDeleteUserMutation,
   useLazySearchByCompanyNameQuery,
+  useEditUserQueriesMutation,
 } = organizationApi;
