@@ -24,8 +24,12 @@ const Routes = [
     name: "Edit Home Page",
   },
   {
-    path: "/faq",
-    name: "Manage FAQs",
+    path: "/addblog",
+    name: "Add Blog",
+  },
+  {
+    path: "/manageblog",
+    name: "Manage Blogs",
   },
 ];
 const SideBar = ({ collapsed }) => {

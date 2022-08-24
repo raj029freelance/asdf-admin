@@ -18,6 +18,7 @@ import { useVerifyMeQuery } from "./services/auth";
 import UserQueries from "components/smart/userQueries/UserQueries";
 import EditHomePage from "components/smart/editHomePage/editHomePage";
 import FaqPage from "components/smart/faqPage/faqPage";
+import ViewBlogs from "components/smart/viewBlogs/viewBlogs";
 
 function App() {
   const { data, isLoading } = useVerifyMeQuery(
@@ -63,7 +64,8 @@ function App() {
               <Route path="companyFields" element={<CompanyData />} />
               <Route path="userQueries" element={<UserQueries />} />
               <Route path="editHomePage" element={<EditHomePage />} />
-              <Route path="faq" element={<FaqPage />} />
+              <Route path="addblog" element={<FaqPage />} />
+              <Route path="manageblog" element={<ViewBlogs />} />
             </Route>
             <Route path="auth" element={<ProtectedRouter />}>
               <Route path="login" element={<LoginForm />} />

@@ -66,11 +66,10 @@ const FaqPage = () => {
         setEditorState={setEditorState}
         style={{ height: "200px" }}
       />
+      <br />
       <Button type="primary" onClick={handleSubmit}>
-        Add
+        Post Blog
       </Button>
-
-      <hr />
     </div>
   );
 };

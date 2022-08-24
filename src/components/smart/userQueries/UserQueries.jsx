@@ -27,6 +27,7 @@ const UserQueries = () => {
         newRecord
       )
       .then(() => {
+        getQueries();
         toast.success("Query updated", {
           pauseOnHover: false,
           autoClose: 2000,
@@ -51,6 +52,7 @@ const UserQueries = () => {
         newRecord
       )
       .then(() => {
+        getQueries();
         toast.success("Query updated", {
           pauseOnHover: false,
           autoClose: 2000,
@@ -140,7 +142,21 @@ const UserQueries = () => {
   const handleChange = (pagination) => {
     setPage(pagination.current);
   };
-  console.log(allOrders, "all");
+
+  const getQueries = () => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/organizations/query/`)
+      .then((res) => {
+        setAllOrders(res.data.queries);
+      })
+      .catch((err) => {
+        toast.error("Some Problem Occured!", {
+          autoClose: 2000,
+          pauseOnHover: false,
+        });
+      });
+  };
+
   return (
     <>
       <div className="ordersWrapper">

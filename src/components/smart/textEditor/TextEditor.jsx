@@ -6,7 +6,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./textEditor.scss";
 
-const TextEditor = ({  editorState, setEditorState }) => {
+const TextEditor = ({ editorState, setEditorState }) => {
   const onTextChange = (editState) => {
     setEditorState(editState);
   };
@@ -30,7 +30,7 @@ const TextEditor = ({  editorState, setEditorState }) => {
         list: { options: ["unordered", "ordered"] },
         link: { options: ["link"] },
         fontFamily: {
-          options: ["Proxima Nova", "Calibri"],
+          options: ["Arial", "sans-serif"],
         },
       }}
     />
