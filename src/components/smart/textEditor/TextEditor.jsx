@@ -16,23 +16,6 @@ const TextEditor = ({ editorState, setEditorState }) => {
       editorState={editorState}
       editorClassName="editor"
       onEditorStateChange={onTextChange}
-      toolbar={{
-        options: [
-          "inline",
-          "blockType",
-          "fontSize",
-          "list",
-          "colorPicker",
-          "link",
-          "image",
-        ],
-        inline: { options: ["bold", "italic", "underline", "strikethrough"] },
-        list: { options: ["unordered", "ordered"] },
-        link: { options: ["link"] },
-        fontFamily: {
-          options: ["Arial", "sans-serif"],
-        },
-      }}
     />
   );
 };
