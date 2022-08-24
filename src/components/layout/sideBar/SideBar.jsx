@@ -23,6 +23,10 @@ const Routes = [
     path: "/editHomePage",
     name: "Edit Home Page",
   },
+  {
+    path: "/faq",
+    name: "Manage FAQs",
+  },
 ];
 const SideBar = ({ collapsed }) => {
   const generateLinks = () => {

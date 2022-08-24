@@ -10,6 +10,7 @@ const EditHomePage = () => {
     title: "",
     subtitle: "",
     faviconURL: "",
+    siteLogo: "",
   });
   useEffect(() => {
     axios
@@ -69,6 +70,14 @@ const EditHomePage = () => {
         name="faviconURL"
         onChange={handleChange}
         value={formData.faviconURL}
+      />
+      <label>Site Logo</label>
+      <Input
+        type="text"
+        className="editpage-input"
+        name="siteLogo"
+        onChange={handleChange}
+        value={formData.siteLogo}
       />
       <Button type="primary" onClick={handleSubmit}>
         Save Changes
