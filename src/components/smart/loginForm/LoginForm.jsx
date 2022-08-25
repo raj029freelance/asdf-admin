@@ -29,12 +29,10 @@ const LoginForm = () => {
           autoClose: 2000,
           pauseOnHover: false
         });
-        console.log(err, 'error here');
       })
       .finally(() => {
         setisLoading(false);
       });
-    console.log('Entered', values);
   };
 
   const onFinishFailed = () => {};

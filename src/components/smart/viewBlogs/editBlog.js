@@ -20,7 +20,6 @@ const EditBlogModal = ({
   const [faqList, setFaqList] = useState([]);
   const [title, setTitle] = useState(propTitle);
 
-  console.log(propTitle);
   const handleSubmit = () => {
     const htmlString = draftToHtml(
       convertToRaw(editorState.getCurrentContent())

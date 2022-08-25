@@ -92,7 +92,6 @@ const EditOrganizationForm = ({ formik, editorState, setEditorState }) => {
                 value={formik.values.CallCenterHours}
                 name="CallCenterHours"
                 defaultValue={() => {
-                  console.log(formik.values.CallCenterHours);
                   return formik.values.CallCenterHours;
                 }}
                 onChange={formik.handleChange}

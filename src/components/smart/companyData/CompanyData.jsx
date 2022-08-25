@@ -155,7 +155,6 @@ const CompanyData = () => {
 
   const editHandler = (companyRecord) => {
     setSelectedOrg(companyRecord);
-    console.log(companyRecord.description);
 
     const contentBlock = htmlToDraft(companyRecord.description);
     if (contentBlock) {

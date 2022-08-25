@@ -45,7 +45,6 @@ const UserQueries = () => {
     const newRecord = {};
     for (var key in record) newRecord[key] = record[key];
     newRecord.note = note;
-    console.log(newRecord);
     axios
       .post(
         `${process.env.REACT_APP_BACKEND_URL}/organizations/query/edit/${record._id}`,
@@ -59,7 +58,6 @@ const UserQueries = () => {
         });
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Some Problem Occured!", {
           autoClose: 2000,
           pauseOnHover: false,

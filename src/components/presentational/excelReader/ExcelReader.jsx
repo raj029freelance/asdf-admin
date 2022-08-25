@@ -65,7 +65,6 @@ class ExcelReader extends Component {
     const rABS = !!reader.readAsBinaryString;
 
     reader.onload = (e) => {
-      console.log("Entered here2")
       /* Parse data */
       const bstr = e.target.result;
       const wb = XLSX.read(bstr, { type: rABS ? 'binary' : 'array', bookVBA: true });
@@ -74,7 +73,6 @@ class ExcelReader extends Component {
       const ws = wb.Sheets[wsname];
       /* Convert array of arrays */
       const data = XLSX.utils.sheet_to_json(ws);
-      console.log(data ,"data hereee");
       const formattedData = data.map((entry)=>({...entry,CompanyName : entry?.CompanyName.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}))
       /* Update state */
       this.setState(
@@ -88,7 +86,6 @@ class ExcelReader extends Component {
         })
         .catch((err) => {
           this.setState({ status: 'exception' });
-          console.log(err);
         })
         .finally(() => {
           this.setState({ isLoading: false ,  data : [] , cols : [] , file  :{}});
