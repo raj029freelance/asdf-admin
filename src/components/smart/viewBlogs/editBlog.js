@@ -6,6 +6,7 @@ import axios from "axios";
 import TextEditor from "../textEditor/TextEditor";
 import { convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
+import "./style.scss";
 
 const EditBlogModal = ({
   isVisible,
@@ -49,13 +50,14 @@ const EditBlogModal = ({
   return (
     <>
       <Modal
+        className="editBlog-Modal"
         footer={null}
         visible={isVisible}
         onCancel={() => {
           handleClose();
         }}
       >
-        <div>
+        <div className="editBlog-container">
           <h2>Edit Blog</h2>
           <br />
           <label>Blog Title</label>
@@ -71,7 +73,6 @@ const EditBlogModal = ({
           <TextEditor
             editorState={editorState}
             setEditorState={setEditorState}
-            style={{ height: "200px" }}
           />
           <br />
           <Button type="primary" onClick={handleSubmit}>

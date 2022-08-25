@@ -49,7 +49,7 @@ const FaqPage = () => {
   };
 
   return (
-    <div>
+    <div className="faqPage-container">
       <h2>Add a new Faq</h2>
       <br />
       <label>Blog Title</label>
@@ -64,7 +64,7 @@ const FaqPage = () => {
       <TextEditor
         editorState={editorState}
         setEditorState={setEditorState}
-        style={{ height: "200px" }}
+        style={{ height: "400px" }}
       />
       <br />
       <Button type="primary" onClick={handleSubmit}>
