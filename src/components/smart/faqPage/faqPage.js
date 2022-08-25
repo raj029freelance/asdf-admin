@@ -12,11 +12,14 @@ const FaqPage = () => {
   const [faqList, setFaqList] = useState([]);
   const [editorState, setEditorState] = useState("");
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/faq`)
       .then((res) => {
         setFaqList(res.data.data);
+
         // const pageData = res.data.data.pageData;
         // setFormData(pageData);
       })
@@ -24,6 +27,7 @@ const FaqPage = () => {
   }, []);
 
   const handleSubmit = () => {
+    setLoading(true);
     const htmlString = draftToHtml(
       convertToRaw(editorState.getCurrentContent())
     );
@@ -35,12 +39,14 @@ const FaqPage = () => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/faq/create`, formData)
       .then(() => {
+        setLoading(false);
         toast.success("Added successfully", {
           autoClose: 2000,
           pauseOnHover: false,
         });
       })
       .catch(() => {
+        setLoading(false);
         toast.error("Some Problem Occured!", {
           autoClose: 2000,
           pauseOnHover: false,
@@ -67,8 +73,8 @@ const FaqPage = () => {
         style={{ height: "400px" }}
       />
       <br />
-      <Button type="primary" onClick={handleSubmit}>
-        Post Blog
+      <Button type="primary" onClick={handleSubmit} disabled={loading}>
+        {loading ? "Posting" : "Post Blog"}
       </Button>
     </div>
   );
