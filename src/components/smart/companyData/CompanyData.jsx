@@ -50,7 +50,7 @@ const CompanyData = () => {
   const [searchReturnedResults, setSearchReturnedResults] = useState(undefined);
 
   const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(10);
+  const limit = 10;
 
   const [editorState, setEditorState] = useState("");
   const [isModalVisible, setModal] = useState(false);
