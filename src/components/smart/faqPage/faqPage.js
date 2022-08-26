@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Space, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import "../companyData/CompanyData.scss";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -31,6 +31,12 @@ const FaqPage = () => {
     const htmlString = draftToHtml(
       convertToRaw(editorState.getCurrentContent())
     );
+
+    if (title.length < 3 || htmlString.length < 2) {
+      setLoading(false);
+      return;
+    }
+
     const formData = {
       title,
       description: htmlString,
@@ -73,7 +79,7 @@ const FaqPage = () => {
         style={{ height: "400px" }}
       />
       <br />
-      <Button type="primary" onClick={handleSubmit} disabled={loading}>
+      <Button type="primary" onClick={handleSubmit} loading={loading}>
         {loading ? "Posting" : "Post Blog"}
       </Button>
     </div>
