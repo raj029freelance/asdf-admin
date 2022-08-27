@@ -28,6 +28,11 @@ const FaqPage = () => {
 
   const handleSubmit = () => {
     setLoading(true);
+
+    if (title.trim().length == 0 || editorState == "") {
+      setLoading(false);
+    }
+
     const htmlString = draftToHtml(
       convertToRaw(editorState.getCurrentContent())
     );
@@ -46,6 +51,8 @@ const FaqPage = () => {
       .post(`${process.env.REACT_APP_BACKEND_URL}/faq/create`, formData)
       .then(() => {
         setLoading(false);
+        setEditorState("");
+        setTitle("");
         toast.success("Added successfully", {
           autoClose: 2000,
           pauseOnHover: false,
