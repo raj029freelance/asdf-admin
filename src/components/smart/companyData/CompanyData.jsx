@@ -20,6 +20,7 @@ import Search from "antd/lib/input/Search";
 
 import { EditorState, ContentState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
+import ConfirmationModal from "../confirmationModal/confirmationModal";
 
 const initialState = {
   CompanyName: "",
@@ -54,7 +55,9 @@ const CompanyData = () => {
 
   const [editorState, setEditorState] = useState("");
   const [isModalVisible, setModal] = useState(false);
+  const [isConfirmationModalVisible, setConfirmationModal] = useState(false);
   const [selectedOrg, setSelectedOrg] = useState(initialState);
+  const [companyToBeDeleted, setCompanyToBeDeleted] = useState(null);
 
   const [addOrganizations] = useAddOrganizationsMutation();
   const [deleteOrganization] = useDeleteOrganizationMutation();
@@ -133,7 +136,7 @@ const CompanyData = () => {
   const deleteHandler = (_id) => {
     deleteOrganization({ _id: _id })
       .then(() => {
-        if (searchReturnedResults.length > 0) {
+        if (searchReturnedResults && searchReturnedResults.length > 0) {
           const updatedList = searchReturnedResults.filter(
             (result) => result._id !== _id
           );
@@ -210,7 +213,10 @@ const CompanyData = () => {
       render: (_, record) => {
         return (
           <Space size="middle">
-            <Button type="danger" onClick={() => deleteHandler(record?._id)}>
+            <Button
+              type="danger"
+              onClick={() => openConfirmationModal(record?._id)}
+            >
               Delete
             </Button>
             <Button type="primary" onClick={() => editHandler(record)}>
@@ -229,6 +235,11 @@ const CompanyData = () => {
 
   const onSearch = (value) => search({ name: value });
 
+  const openConfirmationModal = (companyId) => {
+    setCompanyToBeDeleted(companyId);
+    setConfirmationModal(true);
+  };
+
   return (
     <>
       <Modal
@@ -245,6 +256,19 @@ const CompanyData = () => {
           editorState={editorState}
         />
       </Modal>
+
+      <ConfirmationModal
+        isVisible={isConfirmationModalVisible}
+        handleClose={() => {
+          setConfirmationModal(false);
+        }}
+        handleSubmit={() => {
+          if (companyToBeDeleted) {
+            setConfirmationModal(false);
+            deleteHandler(companyToBeDeleted);
+          }
+        }}
+      />
       <div className="ordersWrapper">
         <Card
           title={<div className="title">All Data</div>}

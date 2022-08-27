@@ -8,6 +8,7 @@ import { convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import { EditorState, ContentState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
+import ConfirmationModal from "../confirmationModal/confirmationModal";
 
 const ViewBlogs = () => {
   const { role } = useSelector((state) => state.user.user);
@@ -15,6 +16,8 @@ const ViewBlogs = () => {
   const [isVisible, setModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState({});
   const [editorState, setEditorState] = useState("");
+  const [isConfirmationModalVisible, setConfirmationModal] = useState(false);
+  const [blogToBeDeleted, setBlogToBeDeleted] = useState(null);
 
   const columns = [
     {
@@ -43,7 +46,10 @@ const ViewBlogs = () => {
       render: (_, record) => {
         return (
           <Space size="middle">
-            <Button type="danger" onClick={() => deleteHandler(record?._id)}>
+            <Button
+              type="danger"
+              onClick={() => openConfirmationModal(record?._id)}
+            >
               Delete
             </Button>
             <Button type="primary" onClick={() => editHandler(record)}>
@@ -101,12 +107,29 @@ const ViewBlogs = () => {
     setModal(true);
   };
 
+  const openConfirmationModal = (blogId) => {
+    setBlogToBeDeleted(blogId);
+    setConfirmationModal(true);
+  };
+
   useEffect(() => {
     getBlogs();
   }, []);
 
   return (
     <>
+      <ConfirmationModal
+        isVisible={isConfirmationModalVisible}
+        handleClose={() => {
+          setConfirmationModal(false);
+        }}
+        handleSubmit={() => {
+          if (blogToBeDeleted) {
+            setConfirmationModal(false);
+            deleteHandler(blogToBeDeleted);
+          }
+        }}
+      />
       <EditBlogModal
         isVisible={isVisible}
         propId={selectedRecord._id}
