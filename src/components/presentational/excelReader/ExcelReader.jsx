@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import * as XLSX from 'xlsx';
-import UploadModal from '../uploadModal/UploadModal';
-import './ExcelReader.scss';
+import React, { Component } from "react";
+import * as XLSX from "xlsx";
+import UploadModal from "../uploadModal/UploadModal";
+import "./ExcelReader.scss";
 const make_cols = (refstr) => {
   let o = [],
     C = XLSX.utils.decode_range(refstr).e.c + 1;
@@ -9,31 +9,31 @@ const make_cols = (refstr) => {
   return o;
 };
 const SheetJSFT = [
-  'xlsx',
-  'xlsb',
-  'xlsm',
-  'xls',
-  'xml',
-  'csv',
-  'txt',
-  'ods',
-  'fods',
-  'uos',
-  'sylk',
-  'dif',
-  'dbf',
-  'prn',
-  'qpw',
-  '123',
-  'wb*',
-  'wq*',
-  'html',
-  'htm'
+  "xlsx",
+  "xlsb",
+  "xlsm",
+  "xls",
+  "xml",
+  "csv",
+  "txt",
+  "ods",
+  "fods",
+  "uos",
+  "sylk",
+  "dif",
+  "dbf",
+  "prn",
+  "qpw",
+  "123",
+  "wb*",
+  "wq*",
+  "html",
+  "htm",
 ]
   .map(function (x) {
-    return '.' + x;
+    return "." + x;
   })
-  .join(',');
+  .join(",");
 
 class ExcelReader extends Component {
   constructor(props) {
@@ -43,8 +43,14 @@ class ExcelReader extends Component {
       data: [],
       cols: [],
       open: false,
-      status: '',
-      isLoading: false
+      status: "",
+      error: {
+        data: {
+          message: "",
+          orgs: [],
+        },
+      },
+      isLoading: false,
     };
     this.handleFile = this.handleFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -67,28 +73,43 @@ class ExcelReader extends Component {
     reader.onload = (e) => {
       /* Parse data */
       const bstr = e.target.result;
-      const wb = XLSX.read(bstr, { type: rABS ? 'binary' : 'array', bookVBA: true });
+      const wb = XLSX.read(bstr, {
+        type: rABS ? "binary" : "array",
+        bookVBA: true,
+      });
       /* Get first worksheet */
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       /* Convert array of arrays */
       const data = XLSX.utils.sheet_to_json(ws);
-      const formattedData = data.map((entry)=>({...entry,CompanyName : entry?.CompanyName.normalize("NFD").replace(/[\u0300-\u036f]/g, "")}))
+      const formattedData = data.map((entry) => ({
+        ...entry,
+        CompanyName: entry?.CompanyName.split("Phone Number")[0]
+          .trim()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, ""),
+      }));
+
       /* Update state */
-      this.setState(
-        { data: data, cols: make_cols(ws['!ref']), open: true, status: 'active', isLoading: true },
-      );
+      this.setState({
+        data: data,
+        cols: make_cols(ws["!ref"]),
+        open: true,
+        status: "active",
+        isLoading: true,
+      });
+      console.log(formattedData);
       this.props
         .addOrganizations(formattedData)
         .unwrap()
         .then((resp) => {
-          this.setState({ status: 'success' });
+          this.setState({ status: "success" });
         })
         .catch((err) => {
-          this.setState({ status: 'exception' });
+          this.setState({ status: "exception", error: err });
         })
         .finally(() => {
-          this.setState({ isLoading: false ,  data : [] , cols : [] , file  :{}});
+          this.setState({ isLoading: false, data: [], cols: [], file: {} });
         });
     };
 
@@ -106,6 +127,7 @@ class ExcelReader extends Component {
           isModalVisible={this.state.open}
           close={() => this.setState({ open: false })}
           status={this.state.status}
+          error={this.state.error}
           isLoading={this.state.isLoading}
         />
         <div>
@@ -114,7 +136,7 @@ class ExcelReader extends Component {
             className="custom-file-input"
             id="file"
             accept={SheetJSFT}
-            key= {this.state.file}
+            key={this.state.file}
             onChange={this.handleChange}
           />
         </div>
