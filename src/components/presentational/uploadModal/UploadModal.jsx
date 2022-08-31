@@ -3,10 +3,19 @@ import { message, Modal, Progress } from "antd";
 const UploadModal = ({ isModalVisible, status, error, close, isLoading }) => {
   const [percent, setPercent] = useState(0);
   const ref = useRef(setInterval(() => setPercent((state) => state + 1), 1000));
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
   useEffect(() => {
+    const setProgess = async () => {
+      for (var i = 0; i < 100; i++) {
+        setInterval(i);
+        await sleep(100);
+      }
+    };
     if (!isLoading) {
       clearInterval(ref.current);
-      setPercent(100);
+      setProgess();
     }
   }, [isLoading]);
   return (
