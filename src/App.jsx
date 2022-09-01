@@ -1,24 +1,25 @@
-import "./App.scss";
-import "antd/dist/antd.min.css";
-import { Routes, Route } from "react-router-dom";
 import { Space, Spin } from "antd";
-import DashBoardLayout from "components/layout/Layout";
-import LoginForm from "components/smart/loginForm/LoginForm";
-import SignUpForm from "components/smart/signupForm/SignUpForm";
+import "antd/dist/antd.min.css";
 import ProtectedRouter from "components/HOC/ProtectedRouter";
-import RegisterCompany from "components/smart/registerCompany/RegisterCompany";
-import CompanyData from "components/smart/companyData/CompanyData";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import RequireAuth from "components/HOC/RequireAuth";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getUsersFail, getUsersSuccess } from "services/userSlice";
-import { useVerifyMeQuery } from "./services/auth";
-import UserQueries from "components/smart/userQueries/UserQueries";
+import DashBoardLayout from "components/layout/Layout";
+import SubmissionsTable from "components/smart/approveSubmissions";
+import CompanyData from "components/smart/companyData/CompanyData";
 import EditHomePage from "components/smart/editHomePage/editHomePage";
 import FaqPage from "components/smart/faqPage/faqPage";
+import LoginForm from "components/smart/loginForm/LoginForm";
+import RegisterCompany from "components/smart/registerCompany/RegisterCompany";
+import SignUpForm from "components/smart/signupForm/SignUpForm";
+import UserQueries from "components/smart/userQueries/UserQueries";
 import ViewBlogs from "components/smart/viewBlogs/viewBlogs";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getUsersFail, getUsersSuccess } from "services/userSlice";
+import "./App.scss";
+import { useVerifyMeQuery } from "./services/auth";
 
 function App() {
   const { data, isLoading } = useVerifyMeQuery(
@@ -66,6 +67,7 @@ function App() {
               <Route path="editHomePage" element={<EditHomePage />} />
               <Route path="addblog" element={<FaqPage />} />
               <Route path="manageblog" element={<ViewBlogs />} />
+              <Route path="approveSubmissions" element={<SubmissionsTable />} />
             </Route>
             <Route path="auth" element={<ProtectedRouter />}>
               <Route path="login" element={<LoginForm />} />

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Card, Space, Button, Input, Modal } from "antd";
-import "../companyData/CompanyData.scss";
-import { toast } from "react-toastify";
+import { Button, Input, Modal } from "antd";
 import axios from "axios";
-import TextEditor from "../textEditor/TextEditor";
 import { convertToRaw } from "draft-js";
 import draftToHtml from "draftjs-to-html";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import "../companyData/CompanyData.scss";
+import TextEditor from "../textEditor/TextEditor";
 import "./style.scss";
 
 const EditBlogModal = ({

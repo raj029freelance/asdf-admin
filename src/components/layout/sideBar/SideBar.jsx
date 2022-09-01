@@ -1,8 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Menu, Layout } from "antd";
-import { Link } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import "./SideBar.scss";
 
 const { Sider } = Layout;
@@ -30,6 +29,10 @@ const Routes = [
   {
     path: "/manageblog",
     name: "Manage Blogs",
+  },
+  {
+    path: "/approveSubmissions",
+    name: "Approve Submissions",
   },
 ];
 const SideBar = ({ collapsed }) => {

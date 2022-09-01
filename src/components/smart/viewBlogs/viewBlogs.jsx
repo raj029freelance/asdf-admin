@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Card, Space, Button, Table, Modal } from "antd";
-import { useSelector } from "react-redux";
+import { Button, Space, Table } from "antd";
 import axios from "axios";
-import { toast } from "react-toastify";
-import EditBlogModal from "./editBlog";
-import { convertToRaw } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import { EditorState, ContentState } from "draft-js";
+import { ContentState, EditorState } from "draft-js";
 import htmlToDraft from "html-to-draftjs";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import ConfirmationModal from "../confirmationModal/confirmationModal";
+import EditBlogModal from "./editBlog";
 
 const ViewBlogs = () => {
   const { role } = useSelector((state) => state.user.user);

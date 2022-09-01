@@ -1,0 +1,18 @@
+.submissionsWrapper {
+  padding: 30px;
+  .title {
+    color: #111827;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 34px;
+  }
+  .card-title-wrapper {
+    display: flex;
+    gap: 20px;
+  }
+  .ant-card {
+    border-radius: 10px !important;
+    box-shadow: 0px 4px 16px -7px rgba(83, 82, 237, 0.57);
+  }
+}
