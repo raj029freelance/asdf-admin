@@ -82,12 +82,23 @@ class ExcelReader extends Component {
       const ws = wb.Sheets[wsname];
       /* Convert array of arrays */
       const data = XLSX.utils.sheet_to_json(ws);
+      // console.log(data[0].CompanyName);
       const formattedData = data.map((entry) => ({
         ...entry,
         CompanyName: entry?.CompanyName.split("Phone Number")[0]
           .trim()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, ""),
+        slug:
+          entry?.CompanyName.replaceAll(" ", "-")
+            .split("Phone Number")[0]
+            .trim()
+
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase() +
+          "-" +
+          entry.PhoneNumber,
       }));
 
       /* Update state */

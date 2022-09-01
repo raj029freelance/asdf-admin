@@ -10,7 +10,7 @@ const UploadModal = ({ isModalVisible, status, error, close, isLoading }) => {
     const setProgess = async () => {
       for (var i = 0; i < 100; i++) {
         setInterval(i);
-        await sleep(100);
+        await sleep(80);
       }
     };
     if (!isLoading) {
