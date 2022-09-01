@@ -16,8 +16,10 @@ const EditBlogModal = ({
   editorState,
   setEditorState,
   handleClose,
+  getBlogsList,
 }) => {
   const [faqList, setFaqList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState(propTitle);
 
   const handleSubmit = () => {
@@ -28,21 +30,25 @@ const EditBlogModal = ({
       title,
       description: htmlString,
     };
-
+    setLoading(true);
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/faq/edit/${propId}`, formData)
       .then(() => {
+        getBlogsList();
         toast.success("Added successfully", {
           autoClose: 2000,
           pauseOnHover: false,
         });
+        setLoading(false);
         handleClose();
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         toast.error("Some Problem Occured!", {
           autoClose: 2000,
           pauseOnHover: false,
         });
+        setLoading(false);
       });
   };
 
@@ -74,8 +80,8 @@ const EditBlogModal = ({
             setEditorState={setEditorState}
           />
           <br />
-          <Button type="primary" onClick={handleSubmit}>
-            Post Blog
+          <Button type="primary" onClick={handleSubmit} disabled={loading}>
+            {loading ? "Updating" : "Update Blog"}
           </Button>
         </div>
       </Modal>

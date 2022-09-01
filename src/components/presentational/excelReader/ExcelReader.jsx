@@ -90,10 +90,9 @@ class ExcelReader extends Component {
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, ""),
         slug:
-          entry?.CompanyName.replaceAll(" ", "-")
-            .split("Phone Number")[0]
+          entry?.CompanyName.split("Phone Number")[0]
             .trim()
-
+            .replaceAll(" ", "-")
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .toLowerCase() +

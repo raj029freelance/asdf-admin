@@ -135,6 +135,7 @@ const ViewBlogs = () => {
         propDescription={selectedRecord.description}
         editorState={editorState}
         setEditorState={setEditorState}
+        getBlogsList={() => getBlogs()}
         handleClose={() => {
           setModal(false);
         }}
