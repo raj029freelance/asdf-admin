@@ -53,7 +53,13 @@ class ExcelReader extends Component {
       isLoading: false,
     };
     this.handleFile = this.handleFile.bind(this);
+    this.sleep = this.sleep.bind(this);
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  sleep(milliseconds) {
+    console.log("gsfgk");
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }
 
   handleChange(e) {
@@ -65,7 +71,7 @@ class ExcelReader extends Component {
     }
   }
 
-  handleFile(Ufile) {
+  async handleFile(Ufile) {
     /* Boilerplate to set up FileReader */
     const reader = new FileReader();
     const rABS = !!reader.readAsBinaryString;
@@ -83,22 +89,32 @@ class ExcelReader extends Component {
       /* Convert array of arrays */
       const data = XLSX.utils.sheet_to_json(ws);
       // console.log(data[0].CompanyName);
-      const formattedData = data.map((entry) => ({
-        ...entry,
-        CompanyName: entry?.CompanyName.split("Phone Number")[0]
-          .trim()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, ""),
-        slug:
-          entry?.CompanyName.split("Phone Number")[0]
-            .trim()
-            .replaceAll(" ", "-")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase() +
-          "-" +
-          entry.PhoneNumber,
-      }));
+      var newFormattedData = [];
+      data.forEach((entry) => {
+        if (
+          entry !== undefined &&
+          entry.CompanyName !== undefined &&
+          entry.PhoneNumber !== undefined &&
+          entry?.CompanyName.split("Phone Number -").length > 0
+        ) {
+          newFormattedData.push({
+            ...entry,
+            CompanyName: entry?.CompanyName.split("Phone Number -")[0]
+              .trim()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, ""),
+            slug:
+              entry?.CompanyName.split("Phone Number -")[0]
+                .trim()
+                .replaceAll(" ", "-")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase() +
+              "-" +
+              entry.PhoneNumber,
+          });
+        }
+      });
 
       /* Update state */
       this.setState({
@@ -108,19 +124,23 @@ class ExcelReader extends Component {
         status: "active",
         isLoading: true,
       });
-      console.log(formattedData);
-      this.props
-        .addOrganizations(formattedData)
-        .unwrap()
-        .then((resp) => {
-          this.setState({ status: "success" });
-        })
-        .catch((err) => {
-          this.setState({ status: "exception", error: err });
-        })
-        .finally(() => {
-          this.setState({ isLoading: false, data: [], cols: [], file: {} });
-        });
+
+      console.log(newFormattedData);
+      this.sleep(1000).then(() => {
+        console.log("fin");
+        this.props
+          .addOrganizations(newFormattedData)
+          .unwrap()
+          .then((resp) => {
+            this.setState({ status: "success" });
+          })
+          .catch((err) => {
+            this.setState({ status: "exception", error: err });
+          })
+          .finally(() => {
+            this.setState({ isLoading: false, data: [], cols: [], file: {} });
+          });
+      });
     };
 
     if (rABS) {

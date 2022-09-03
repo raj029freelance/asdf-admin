@@ -10,7 +10,7 @@ const UploadModal = ({ isModalVisible, status, error, close, isLoading }) => {
     const setProgess = async () => {
       for (var i = 0; i < 100; i++) {
         setInterval(i);
-        await sleep(80);
+        await sleep(120);
       }
     };
     if (!isLoading) {
@@ -39,10 +39,17 @@ const UploadModal = ({ isModalVisible, status, error, close, isLoading }) => {
                 ? "Uploaded Successfully!"
                 : "Failed to Upload File"}
             </p>
-            <p>{status !== "success" ? error.data.message : ""}</p>
+            <p>
+              {status !== "success"
+                ? typeof error.data.message == String
+                  ? error.data.message
+                  : error.data.message.message
+                : ""}
+            </p>
 
             {status !== "success"
-              ? error.data.orgs.map((org) => {
+              ? error.data.orgs &&
+                error.data.orgs.map((org) => {
                   return <p> {org.CompanyName}</p>;
                 })
               : null}
