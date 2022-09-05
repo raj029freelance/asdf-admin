@@ -101,6 +101,11 @@ const SubmissionsTable = () => {
       key: "PhoneNumber",
     },
     {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
       title: "CallBack Available",
       dataIndex: "CallBackAvailable",
       key: "CallBackAvailable",
