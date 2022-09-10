@@ -11,6 +11,7 @@ import LoginForm from "components/smart/loginForm/LoginForm";
 import RegisterCompany from "components/smart/registerCompany/RegisterCompany";
 import SignUpForm from "components/smart/signupForm/SignUpForm";
 import UserQueries from "components/smart/userQueries/UserQueries";
+import Analytics from "components/smart/analytics/Analytics";
 import ViewBlogs from "components/smart/viewBlogs/viewBlogs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -68,6 +69,7 @@ function App() {
               <Route path="addblog" element={<FaqPage />} />
               <Route path="manageblog" element={<ViewBlogs />} />
               <Route path="approveSubmissions" element={<SubmissionsTable />} />
+              <Route path="analytics" element={<Analytics />} />
             </Route>
             <Route path="auth" element={<ProtectedRouter />}>
               <Route path="login" element={<LoginForm />} />

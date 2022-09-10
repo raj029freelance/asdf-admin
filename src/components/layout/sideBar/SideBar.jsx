@@ -34,6 +34,10 @@ const Routes = [
     path: "/approveSubmissions",
     name: "Approve Submissions",
   },
+  {
+    path: "/analytics",
+    name: "Analytics",
+  },
 ];
 const SideBar = ({ collapsed }) => {
   const generateLinks = () => {
