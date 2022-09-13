@@ -13,6 +13,7 @@ import SignUpForm from "components/smart/signupForm/SignUpForm";
 import UserQueries from "components/smart/userQueries/UserQueries";
 import Analytics from "components/smart/analytics/Analytics";
 import ViewBlogs from "components/smart/viewBlogs/viewBlogs";
+import ExternallyAddedOrgs from "components/smart/scrappedOrgs/scrappedOrgs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -70,6 +71,7 @@ function App() {
               <Route path="manageblog" element={<ViewBlogs />} />
               <Route path="approveSubmissions" element={<SubmissionsTable />} />
               <Route path="analytics" element={<Analytics />} />
+              <Route path="externalorgs" element={<ExternallyAddedOrgs />} />
             </Route>
             <Route path="auth" element={<ProtectedRouter />}>
               <Route path="login" element={<LoginForm />} />

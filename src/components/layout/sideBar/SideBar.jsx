@@ -38,6 +38,10 @@ const Routes = [
     path: "/analytics",
     name: "Analytics",
   },
+  {
+    path: "/externalorgs",
+    name: "Externally added Orgs",
+  },
 ];
 const SideBar = ({ collapsed }) => {
   const generateLinks = () => {

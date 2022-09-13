@@ -46,6 +46,8 @@ const validationSchema = Yup.object().shape({
 
 const CompanyData = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showExternallyScrappedResults, setExternallyScrappedResults] =
+    useState(true);
 
   const [allOrders, setAllOrders] = useState([]);
   const [searchReturnedResults, setSearchReturnedResults] = useState(undefined);
