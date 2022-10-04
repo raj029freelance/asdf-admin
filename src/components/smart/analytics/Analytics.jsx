@@ -9,8 +9,10 @@ const Analytics = () => {
   });
   const getData = async () => {
     try {
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth() + 1;
       const res = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/analytics/get/9-2022`
+        `${process.env.REACT_APP_BACKEND_URL}/analytics/get/${currentMonth}-${currentYear}`
       );
       //   console.log(res);
       setData(res.data);
